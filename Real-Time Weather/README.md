@@ -10,7 +10,7 @@ This repository contains 5 small projects built with **Vanilla JavaScript (ES6+)
 
    * Real-time weather search using [WeatherAPI](https://www.weatherapi.com/)
    * Features autocomplete, loading states, caching, and animations
-   * [Live Demo](#) | [Read More](./weather-app/README.md)
+   *[Read More](./weather-app/README.md)
 
 *Apps 2–5 will be added soon.*
 
