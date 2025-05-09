@@ -47,13 +47,13 @@ This repository contains 5 small projects built with **Vanilla JavaScript (ES6+)
 │
 ├── index.html
 ├── styles.css
-├── main.js
+├── script.js
 │
 └── modules/
     ├── fetchWeather.js      # Handles API call for weather
     ├── cache.js             # In-memory caching logic
     ├── ui.js                # UI logic (loading, error, render)
-    └── autocomplete.js      # Suggestion API + rendering
+    
 ```
 
 ---
