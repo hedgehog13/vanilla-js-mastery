@@ -13,6 +13,8 @@ const inputEl = document.querySelector("#city-input");
 const weatherResultEl = document.querySelector("#weather-result");
 const errorEl = document.querySelector("#error-message");
 const suggestionBox = document.querySelector("#suggestions");
+let activeIndex = -1;
+let currentSuggestions = [];
 document.addEventListener("DOMContentLoaded", () => {
   handleInput();
   attachClick();
@@ -41,9 +43,32 @@ const handleInput = () => {
       hideError();
       const suggestions = await fetchSuggestions(inputEl.value);
       renderSuggestions(suggestions);
-    
+
       return;
     }
+  });
+
+  inputEl.addEventListener("keydown", (e) => {
+    const suggestionItems = suggestionBox.querySelectorAll("li");
+    if (!suggestionItems.length) return;
+
+    if (e.key === "ArrowDown") {
+      activeIndex = (activeIndex + 1) % suggestionItems.length;
+    } else if (e.key === "ArrowUp") {
+      activeIndex =
+        (activeIndex - 1 + suggestionItems.length) % suggestionItems.length;
+    } else if (e.key === "Enter") {
+      if (activeIndex >= 0 && currentSuggestions[activeIndex]) {
+        inputEl.value = currentSuggestions[activeIndex].name;
+        suggestionBox.innerHTML = "";
+        getButton().disabled = false;
+        e.preventDefault();
+      }
+      return;
+    }
+    suggestionItems.forEach((item, idx) => {
+      item.classList.toggle("highlight", idx === activeIndex);
+    });
   });
 };
 const attachClick = () => {
@@ -88,13 +113,16 @@ const handleUI = async (searchValue) => {
   }
 };
 const renderSuggestions = (cities) => {
-
   suggestionBox.innerHTML = "";
+  activeIndex = -1;
+  currentSuggestions = cities;
+
   if (!cities.length) return;
-  cities.forEach((city) => {
+  cities.forEach((city, index) => {
     const li = document.createElement("li");
     li.textContent = `${city.name}, ${city.country}`;
-
+    li.tabIndex = 0;
+    li.dataset.index = index;
     li.addEventListener("click", () => {
       inputEl.value = city.name;
       suggestionBox.innerHTML = "";

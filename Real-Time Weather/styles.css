@@ -44,7 +44,9 @@ body {
   .suggestions-list li:hover {
     background-color: #f0f0f0;
   }
-  
+  .suggestions-list li.highlight {
+    background-color: #d3e4ff;
+  }
   button {
     padding: 0.5rem 1rem;
     cursor: pointer;
